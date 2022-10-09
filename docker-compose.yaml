@@ -21,6 +21,8 @@ services:
             - '--storage.tsdb.max-block-duration=30m'
             - '--storage.tsdb.min-block-duration=30m'
             - '--web.enable-lifecycle'
+            - '--web.enable-remote-write-receiver'
+            - '--web.enable-admin-api'
             - '--web.console.libraries=/usr/share/prometheus/console_libraries'
             - '--web.console.templates=/usr/share/prometheus/consoles'
         ports:
@@ -43,6 +45,8 @@ services:
             - '--storage.tsdb.max-block-duration=30m'
             - '--storage.tsdb.min-block-duration=30m'
             - '--web.enable-lifecycle'
+            - '--web.enable-remote-write-receiver'
+            - '--web.enable-admin-api'
             - '--web.console.libraries=/usr/share/prometheus/console_libraries'
             - '--web.console.templates=/usr/share/prometheus/consoles'
         ports:
@@ -65,6 +69,8 @@ services:
             - '--storage.tsdb.max-block-duration=30m'
             - '--storage.tsdb.min-block-duration=30m'
             - '--web.enable-lifecycle'
+            - '--web.enable-remote-write-receiver'
+            - '--web.enable-admin-api'
             - '--web.console.libraries=/usr/share/prometheus/console_libraries'
             - '--web.console.templates=/usr/share/prometheus/consoles'
         ports:
@@ -87,6 +93,8 @@ services:
             - '--storage.tsdb.max-block-duration=30m'
             - '--storage.tsdb.min-block-duration=30m'
             - '--web.enable-lifecycle'
+            - '--web.enable-remote-write-receiver'
+            - '--web.enable-admin-api'
             - '--web.console.libraries=/usr/share/prometheus/console_libraries'
             - '--web.console.templates=/usr/share/prometheus/consoles'
         ports:
@@ -336,3 +344,15 @@ services:
         env_file:
             - ./grafana/config.monitoring
         restart: always
+
+
+    blackbox:
+       container_name: blackbox
+       image: prom/blackbox-exporter
+       ports:
+         - 9115:9115
+       restart: always
+       command:
+         - '--config.file=/etc/blackbox/blackbox.yml'
+       volumes:
+         - ./blackbox/:/etc/blackbox/
